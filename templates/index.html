@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Simgeler-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Css Dosyası-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+    <!-- Web Başlığı-->
+    <title>SkyWebLab</title>
+</head>
+<body>
+    <section>
+        <header>
+            <!-- Başlık Kısmı -->
+        <h1>SkyWebLab</h1>
+        <ul class="menu">
+            <li><a href="#">Son Dakika</a></li>
+            <li><a href="#">Türkiye</a></li>
+            <li><a href="#">Dünya</a></li>
+            <li><a href="{{ url_for('borsa') }}">Canlı Borsa</a></li>
+            <li><a href="{{ url_for('about') }}">İletişim</a></li>
+        </ul>
+        <!-- Arama Çubuğu -->   
+        <form method="GET" action="/" class="search-form">
+            <input type="text" name="q" placeholder="Başlık Ara">
+            <button type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        </header>
+
+        <!-- Slayt Kısmı -->
+        <div class="slider-container">
+            <svg class="border-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <rect x="1" y="1" width="98" height="98" fill="none" />
+            </svg>
+            <div class="slider">
+                {% for article in articles[:5] %}
+                    <div class="slide">
+                        <img src="{{ article.urlToImage if article.urlToImage else '/static/images/error.jpeg' }}" alt="Haber Görseli" class="slider-image">
+                        <div class="slide-content">
+                            <a href="{{ article.url }}" class="slider-link">{{ article.title }}</a>
+                            <p class="slider-description">{{ article.description }}</p>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Küçük haberlerin listesi -->
+        {% if articles %}
+        <ul class="news-list">
+        {% for article in articles[5:] %}
+            <li class="news-item">
+                <div class="news-image-container">
+                    <img src="{{ article.urlToImage }}" alt="Haber Görseli" class="news-image">
+                </div>
+                <div class="news-item-content">
+                    <a href="{{ article.url }}" class="news-link">{{ article.title }}</a>
+                    <p class="news-description">{{ article.description }}</p>
+                </div>
+                <svg class="border-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <rect x="1" y="1" width="98" height="98" fill="none" />
+                </svg>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Hiç haber bulunamadı.</p>
+    {% endif %}
+    
+    </section>
+    <footer>
+        <!-- footer kısmı -->
+        <div class="foot">
+          <div class="sec aboutus">
+              <h2>Hakkımızda</h2>
+              <p>SKY LAB Bilgisayar Bilimleri Kulübü <br> Yıldız Teknik Üniversitesi bünyesinde ar-ge,<br>proje, organizasyon, iş geliştirme ve tanıtım ekipleri ile <br>ana yapısını oluşturan en aktif ve etkin kulüplerden biridir.</p>
+              <ul class="sci">
+                <li><a href="#"><i class="fa-brands fa-discord" style="color: aliceblue;"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-instagram" style="color: aliceblue;"></i></a></li>
+                <li><a href="#"><i class="fa-brands fa-twitter" style="color: aliceblue;"></i></a></li>
+              </ul>
+          </div>
+          <div class="sec quick">
+              <h2>Menü</h2>
+              <ul class="ssi">
+                 <li><a href="#">Son Dakika</a></li>
+                 <li><a href="#">Canlı</a></li>
+                 <li><a href="{{ url_for('borsa') }}">Borsa</a></li>
+                 <li><a href="{{ url_for('about') }}">İletişim</a></li>
+              </ul>
+          </div>
+          <div class="sec contact">
+             <h2>İletişim</h2>
+             <ul class="info">
+                <li>
+                    <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                    <span>34616, Davutpaşa, İstanbul<br>
+                    Olmayan Bir Cad.  Hayal Sok.<br>Türkiye</span>
+                </li>
+                <li>
+                    <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                    <span>506 992 27 37</span>
+                </li>
+                <li>
+                    <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                    <span>emirhanuzunoglu61@gmail.com</span>
+                </li>
+            </div>
+            <div  class="copyright">
+         <p> Copyright 2024 SkyWebLab</p>
+      </div>
+        </div>
+    </footer>
+    <!-- Js Dosyası-->
+    <script src="{{ url_for('static', filename='JS/turkey.js') }}"></script>
+</body>
+</html>
